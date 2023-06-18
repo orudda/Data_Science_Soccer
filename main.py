@@ -36,7 +36,7 @@ menu_options = ["Home", "Contribuições", "Dados", "Visualização Manual"]
 selected_option = st.sidebar.selectbox("Navegação", menu_options)
 
 #Contribuintes
-owners = ["Kaio Na Pica", "Othávio Ruddá"]
+owners = ["Caio Maciel", "Othávio Ruddá"]
 
 utils = Utils()
 
