@@ -1,7 +1,6 @@
 import os
 import sys
 
-from tqdm.notebook import tqdm
 
 import math
 
@@ -9,8 +8,6 @@ import pandas as pd
 import json
 pd.set_option('display.max_columns', None)
 
-from io import BytesIO
-from pathlib import Path
 
 import socceraction.spadl as spadl
 import socceraction.spadl.wyscout as wyscout
