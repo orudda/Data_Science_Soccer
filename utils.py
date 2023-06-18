@@ -42,7 +42,8 @@ class Utils:
     
     def plotChart(self,title, x_title, y_title, x_df, y_df):
         # Criação do gráfico de barras
-        fig = go.Figure(data=go.Bar(x=x_df, y=y_df))
+        # fig = go.Figure(data=go.Bar(x=x_df, y=y_df))
+        fig = go.Figure(data=go.Bar(x=y_df, y=x_df, orientation='h'))
 
         # Configurações do layout
         fig.update_layout(title=title,
@@ -51,6 +52,4 @@ class Utils:
 
         # Exibição do gráfico
         st.plotly_chart(fig)
-
-
 

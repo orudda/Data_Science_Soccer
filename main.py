@@ -22,21 +22,20 @@ from utils import Utils
 
 # Configurações de página
 st.set_page_config(
-    page_title="Visualização de Dados",
+    page_title="Ciência de Dados Aplicada ao Futebol",
     page_icon="🎓",
     layout="wide"
 )
 
 # Título e cabeçalho
-st.title("Visualização de Dados")
-# st.markdown("Bem-vindos ao site da Escola XYZ!")
+st.title("Ciência de Dados Aplicada ao Futebol")
 
 # Menu de navegação
-menu_options = ["Home", "Contribuições", "Dados", "Visualização Manual"]
+menu_options = ["Home", "Contributions", "Data", "Visualizations"]
 selected_option = st.sidebar.selectbox("Navegação", menu_options)
 
 #Contribuintes
-owners = ["Kaio Na Pica", "Othávio Ruddá"]
+owners = ["Caio Maciel", "Othávio Ruddá"]
 
 utils = Utils()
 
@@ -45,16 +44,16 @@ if selected_option == "Home":
     st.header("Bem-vindo ao trabalho de visualização de dados!")
     # st.write("Aqui você encontrará informações sobre nossos cursos, professores e muito mais.")
 
-    st.subheader("Contribuintes:")
+    st.subheader("Contributors:")
     for i in owners:
         st.write(i)
 
-    st.subheader("Sumário")
+    st.subheader("Summary")
     for i in menu_options:
         st.write("\t     -"+i)
 
 
-elif selected_option == "Contribuições":
+elif selected_option == "Contributions":
     st.header("Contribuições")
     st.write("Nessa página descrevemos as contribuições de cada aluno")
 
@@ -70,7 +69,7 @@ elif selected_option == "Contribuições":
     st.dataframe(cursos_df)
 
 # Página de contato
-elif selected_option == "Dados":
+elif selected_option == "Data":
     st.header("Dados Utilizados")
     text = "texto de dados"
     st.write(text)
@@ -81,7 +80,7 @@ elif selected_option == "Dados":
 
 
 # Página de dados manual
-elif selected_option == "Visualização Manual":
+elif selected_option == "Visualizations":
     st.header("Total de Passes")
     listEvents = ['Head pass', 'Simple pass', 'High pass', 'Smart pass', 'Hand pass']
     df = utils.countingEvents(listEvents)
