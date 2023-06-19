@@ -1,2 +1,5 @@
 files/events_England.json filter=lfs diff=lfs merge=lfs -text
 files/passes.json filter=lfs diff=lfs merge=lfs -text
+files/matches_England.json filter=lfs diff=lfs merge=lfs -text
+files/players.json filter=lfs diff=lfs merge=lfs -text
+files/spadl.json filter=lfs diff=lfs merge=lfs -text

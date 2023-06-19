@@ -2,3 +2,6 @@ plotly
 socceraction
 matplotlib
 seaborn
+matplotsoccer
+scipy.ndimage
+mplsoccer
