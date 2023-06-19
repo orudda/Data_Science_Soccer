@@ -1,3 +1,5 @@
 files/
+files/events_England.json
+__pycache__/
 .DS_Store
 .gitattributes
