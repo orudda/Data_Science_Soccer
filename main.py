@@ -77,8 +77,8 @@ elif selected_option == "Data":
 # Página de dados manual
 elif selected_option == "Visualizations":
     st.header("Visualização de Dados")
-    st.dataframe(utils.passes.head(15))
     utils = Utils()
+    st.dataframe(utils.passes.head(15))
     utils.plotBarChart(['Simple pass', 'High pass', 'Head pass', 'Smart pass', 'Hand pass'],'passes')
     utils.plotBarChart(['Free kick shot', 'Shot'],'shots')
     # utils.plotChart(title='', x_title='Shots', y_title='Teams', x_df=df['mean'], y_df=df.index)
