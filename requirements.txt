@@ -3,5 +3,5 @@ socceraction
 matplotlib
 seaborn
 matplotsoccer
-scipy.ndimage
+scipy
 mplsoccer
