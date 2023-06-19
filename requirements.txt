@@ -5,3 +5,4 @@ seaborn
 matplotsoccer
 scipy
 mplsoccer
+pandas == 1.5.3

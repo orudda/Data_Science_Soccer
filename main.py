@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
 from utils import Utils
+from classification import Cla
 
 # Configurações de página
 st.set_page_config(
@@ -31,7 +32,7 @@ st.set_page_config(
 st.title("Ciência de Dados Aplicada ao Futebol")
 
 # Menu de navegação
-menu_options = ["Home", "Contributions", "Data", "Visualizations"]
+menu_options = ["Home", "Contributions", "Data", "Visualizations", "Classification"]
 selected_option = st.sidebar.selectbox("Navegação", menu_options)
 
 #Contribuintes
@@ -96,4 +97,7 @@ elif selected_option == "Visualizations":
     
     utils.plotPasMap(teams[0],2499720)#id do jogo
     utils.plotPasMap(teams[3],2499728)#id do jogo
+    utils.plotEuclidian()
 
+elif selected_option == "Classification":
+    c=Cla()

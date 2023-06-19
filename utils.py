@@ -15,6 +15,8 @@ import streamlit as st
 import matplotsoccer
 from scipy.ndimage import gaussian_filter
 from mplsoccer import Pitch, Sbopen, VerticalPitch
+from scipy.spatial.distance import pdist, squareform
+import numpy as np
 
 class Utils:
     def __init__(self):
@@ -26,6 +28,7 @@ class Utils:
         self.df_players = self.loadData('files/players.json')
         self.df_spadl = self.loadData('files/spadl.json')
         self.df_merge = self.df_teams_events()
+        self.num_subsamples=10
 
         self.final_position = ['Manchester City', 'Manchester United', 'Tottenham Hotspur', 'Liverpool', 'Chelsea', 
                 'Arsenal', 'Burnley', 'Everton', 'Leicester City', 'Newcastle United', 'Crystal Palace',
@@ -96,6 +99,81 @@ class Utils:
         fig.suptitle("{} Passes in the Game {}- 2017-18 PL Season". format(team, gameId), fontsize = 25)
 
         st.pyplot(plt)
+
+    def createSubsamples(self):
+        teams_subsamples_passes = {}
+        team_passes_groups = self.passes.groupby('name')
+
+        for team in (self.final_position):
+            subsamples = []  # List to store the subsamples
+
+            for _ in range(self.num_subsamples):
+                subsample = team_passes_groups.get_group(team)[['start_x', 'start_y', 'end_x', 'end_y', 'name']]\
+                            .sample(n=len(team_passes_groups.get_group(team)) // 10)
+
+                subsamples.append(subsample)
+            
+            teams_subsamples_passes[team] = subsamples
+        return teams_subsamples_passes
+
+    def creatHeatSample(self):
+        df_list = []
+        teams = []
+        teams_subsamples_passes = self.createSubsamples()
+
+        for team in (self.final_position):
+            for i in range(self.num_subsamples):
+                hm = matplotsoccer.count(teams_subsamples_passes[team][i].start_x, teams_subsamples_passes[team][i].start_y, n = 25, m = 25)
+                hm = gaussian_filter(hm, 1)
+
+                df_list.append(hm.flatten())    # Converting (25,25) heatmaps to 1D array of (625,)
+                teams.append(team)
+        return df_list,teams
+    
+    def plotEuclidian(self):
+        df_list,teams = self.creatHeatSample()
+        distances = pdist(df_list, metric='euclidean')
+        dist_matrix = squareform(distances)
+        dist_df = pd.DataFrame(dist_matrix, index=teams, columns=teams)
+        dist_df /= np.max(dist_df.values)
+
+        df_distance_mean_row = []
+
+        for index, row in dist_df.iterrows():
+            tmp = []
+            j = 0
+
+            for i in range(9, 200, 10):
+                tmp.append(np.mean(row.values[j:i]))
+                j += 10
+            
+            df_distance_mean_row.append(tmp)
+        
+        df_distance_mean_col = pd.DataFrame(df_distance_mean_row, index=teams, columns=self.final_position)
+
+        df_distance_mean = []
+
+        for (index, col) in df_distance_mean_col.items():
+            tmp = []
+            j = 0
+
+            for i in range(9, 200, 10):
+                tmp.append(np.mean(col.values[j:i]))
+                j += 10
+            
+            df_distance_mean.append(tmp)
+
+        fig, ax = plt.subplots(figsize=(12,6))
+        im = plt.imshow(df_distance_mean, cmap='hot', interpolation='nearest')
+        fig.tight_layout()
+
+        plt.colorbar()
+        plt.xticks(np.arange(len(df_distance_mean)), df_distance_mean_col.columns, rotation=90)
+        plt.yticks(np.arange(len(df_distance_mean)), df_distance_mean_col.columns)
+
+        plt.title('Euclidean Distance Between Pass Heatmaps')
+        st.pyplot(plt)
+
 
         
 
